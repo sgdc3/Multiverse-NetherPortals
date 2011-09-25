@@ -1,28 +1,7 @@
 package com.onarandombox.MultiverseNetherPortals;
 
-import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.event.Event.Priority;
-import org.bukkit.event.Event.Type;
-import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.util.config.Configuration;
-
-import com.onarandombox.MultiverseCore.MVPlugin;
 import com.onarandombox.MultiverseCore.MultiverseCore;
+import com.onarandombox.MultiverseCore.api.MVPlugin;
 import com.onarandombox.MultiverseCore.commands.HelpCommand;
 import com.onarandombox.MultiverseNetherPortals.commands.LinkCommand;
 import com.onarandombox.MultiverseNetherPortals.commands.ShowLinkCommand;
@@ -32,6 +11,17 @@ import com.onarandombox.MultiverseNetherPortals.listeners.MVNPPlayerListener;
 import com.onarandombox.MultiverseNetherPortals.listeners.MVNPPluginListener;
 import com.onarandombox.utils.DebugLog;
 import com.pneumaticraft.commandhandler.CommandHandler;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.event.Event.Priority;
+import org.bukkit.event.Event.Type;
+import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.util.config.Configuration;
+
+import java.io.*;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MultiverseNetherPortals extends JavaPlugin implements MVPlugin {
 
@@ -62,7 +52,7 @@ public class MultiverseNetherPortals extends JavaPlugin implements MVPlugin {
             return;
         }
         debugLog = new DebugLog("Multiverse-NetherPortals", getDataFolder() + File.separator + "debug.log");
-        this.checkForNetherEnabled();
+        //this.checkForNetherEnabled();
 
         this.core.incrementPluginCount();
         // As soon as we know MVCore was found, we can use the debug log!
@@ -82,6 +72,8 @@ public class MultiverseNetherPortals extends JavaPlugin implements MVPlugin {
 
     }
 
+    /** Don't think this is actually needed anymore */
+    @Deprecated
     private void checkForNetherEnabled() {
         File serverFolder = new File(this.getDataFolder().getAbsolutePath()).getParentFile().getParentFile();
         File serverProperties = new File(serverFolder.getAbsolutePath() + File.separator + "server.properties");
@@ -127,9 +119,7 @@ public class MultiverseNetherPortals extends JavaPlugin implements MVPlugin {
         this.MVNPconfig.save();
     }
 
-    /**
-     * Register commands to Multiverse's CommandHandler so we get a super sexy single menu
-     */
+    /** Register commands to Multiverse's CommandHandler so we get a super sexy single menu */
     private void registerCommands() {
         this.commandHandler = this.core.getCommandHandler();
         this.commandHandler.registerCommand(new LinkCommand(this));
@@ -166,7 +156,7 @@ public class MultiverseNetherPortals extends JavaPlugin implements MVPlugin {
 
     /**
      * Parse the Authors Array into a readable String with ',' and 'and'.
-     * 
+     *
      * @return
      */
     private String getAuthors() {
@@ -225,8 +215,9 @@ public class MultiverseNetherPortals extends JavaPlugin implements MVPlugin {
     }
 
     /**
-     * Print messages to the server Log as well as to our DebugLog. 'debugLog' is used to seperate Heroes information from the Servers Log Output.
-     * 
+     * Print messages to the server Log as well as to our DebugLog. 'debugLog' is used to seperate Heroes information
+     * from the Servers Log Output.
+     *
      * @param level
      * @param msg
      */
@@ -250,7 +241,7 @@ public class MultiverseNetherPortals extends JavaPlugin implements MVPlugin {
         buffer += logAndAddToPasteBinBuffer("Special Code: FRN001");
         return buffer;
     }
-    
+
     private String logAndAddToPasteBinBuffer(String string) {
         this.log(Level.INFO, string);
         return "[Multiverse-NetherPortals] " + string + "\n";

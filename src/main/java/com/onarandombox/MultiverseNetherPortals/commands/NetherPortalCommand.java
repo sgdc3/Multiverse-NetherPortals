@@ -13,10 +13,9 @@ public abstract class NetherPortalCommand extends Command {
     public NetherPortalCommand(MultiverseNetherPortals plugin) {
         super(plugin);
         this.plugin = plugin;
-
     }
 
     @Override
-    public abstract void runCommand(CommandSender arg0, List<String> arg1);
+    public abstract void runCommand(CommandSender sender, List<String> args);
 
 }
